@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center container">
+    <h1 class="display-4">SSE example</h1>
+
+        <div class="row">
+            <div class="col"><button type="button" class="btn btn-primary" id="start-infinite">Start infinite</button></div>
+            <div class="col"><button type="button" class="btn btn-primary" id="start-feedback">Start feedback</button></div>
+            <div class="col"><button type="button" class="btn btn-primary" id="start-upload-progress">Start upload</button></div>
+            <div class="col"><button type="button" class="btn btn-primary" id="stop-all">Stop</button></div>
+        </div>
+        <div class="row" id="events-container">
+            <h2>Events</h2>
+            <ul></ul>
+        </div>
+
+</div>
+
+<script src="js/index.js" asp-append-version="true"></script>
