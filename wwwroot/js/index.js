@@ -6,6 +6,7 @@ function registerError(source) {
     source.onerror = (e) => {
         console.error(e);
         source.close();
+        sseEventSource = null;
     }
 }
 
@@ -34,14 +35,12 @@ document.querySelector('#stop-all').addEventListener('click', () => {
 });
 
 document.querySelector('#start-feedback').addEventListener('click', () => {
-    if(sseEventSource !== null) return;
+    const items = $('#feedback-options').val();
+    if(sseEventSource !== null || items.length === 0) return;
 
-    console.log('starting');
-    sseEventSource = new EventSource('value/feedback', {withCredentials: true});
+    console.log('starting',items);
+    const ids = items.join(',');
+    sseEventSource = new EventSource('value/feedback?idsStr='+ids, {withCredentials: true});
     registerError(sseEventSource);
     registerMessage(sseEventSource);
 });
-
-function getRandomValue(){
-    return new Date().valueOf();
-}

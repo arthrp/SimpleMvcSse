@@ -33,21 +33,19 @@ public class ValueController : Controller
     }
 
     [HttpGet("feedback")]
-    public async Task GetFeedback()
+    public async Task GetFeedback(string idsStr)
     {
         var response = _httpContextAccessor.HttpContext?.Response;
         response!.Headers.Add("Content-Type", "text/event-stream");
 
-        var ids = new List<int>() {10, 20, 666};
-        await foreach (var result in _longRunningService.Schedule(ids))
+        var newIds = idsStr.Split(',').Select(e => int.Parse(e)).ToList();
+        await foreach (var result in _longRunningService.Schedule(newIds))
         {
-            await response.WriteAsync($"data: {result.Id}: {result.Result.ToString()} \r\r");
-
+            await response.WriteAsync($"data: Processed {result.Id}: {result.Result.ToString()} \r\r");
             await response.Body.FlushAsync();
         }
 
-        await response.WriteAsync("data: Completed");
+        await response.WriteAsync("data: Completed\r\r");
         await response.Body.FlushAsync();
-        await Task.Delay(100);
     }
 }

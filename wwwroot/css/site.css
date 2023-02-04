@@ -16,3 +16,7 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.row {
+  margin: 20px 0;
+}
